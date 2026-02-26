@@ -4,50 +4,87 @@ import MonthlyReport from './MonthlyReport';
 import { format, parseISO } from 'date-fns';
 import { Plus, PieChart, List, Archive, Trash2 } from 'lucide-react';
 import { getArchives, saveArchives, saveExpenses } from '../utils/storage';
+import Modal from './Modal';
 
 const Dashboard = ({ budget, expenses, setExpenses }) => {
     const [activeTab, setActiveTab] = useState('expenses'); // 'expenses' or 'report'
+    const [modalConfig, setModalConfig] = useState({ isOpen: false });
 
     const totalSpent = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
     const remaining = budget.amount - totalSpent;
     const isOverBudget = remaining < 0;
 
+    const closeConfig = () => setModalConfig(prev => ({ ...prev, isOpen: false }));
+
     const handleArchiveMonth = () => {
         if (expenses.length === 0) {
-            alert("No expenses to archive for the current month.");
+            setModalConfig({
+                isOpen: true,
+                type: 'alert',
+                title: 'No Expenses',
+                message: "No expenses to archive for the current month.",
+                onConfirm: closeConfig
+            });
             return;
         }
 
-        const monthLabel = prompt("Enter a label for this month (e.g. 'Feb 2026'):", format(new Date(), 'MMM yyyy'));
-        if (!monthLabel) return; // User cancelled
+        setModalConfig({
+            isOpen: true,
+            type: 'prompt',
+            title: 'Archive Month',
+            message: "Enter a label for this month (e.g. 'Feb 2026'):",
+            defaultValue: format(new Date(), 'MMM yyyy'),
+            onConfirm: (monthLabel) => {
+                if (!monthLabel) {
+                    closeConfig();
+                    return;
+                }
 
-        const archives = getArchives();
-        archives.push({
-            id: Date.now().toString(),
-            label: monthLabel,
-            budget: budget,
-            expenses: [...expenses],
-            dateArchived: new Date().toISOString()
+                const archives = getArchives();
+                archives.push({
+                    id: Date.now().toString(),
+                    label: monthLabel,
+                    budget: budget,
+                    expenses: [...expenses],
+                    dateArchived: new Date().toISOString()
+                });
+                saveArchives(archives);
+
+                // Clear current expenses
+                setExpenses([]);
+                saveExpenses([]);
+
+                setModalConfig({
+                    isOpen: true,
+                    type: 'alert',
+                    title: 'Success',
+                    message: "Month archived successfully! You can view it in the Monthly Report tab.",
+                    onConfirm: closeConfig
+                });
+            },
+            onCancel: closeConfig
         });
-        saveArchives(archives);
-
-        // Clear current expenses
-        setExpenses([]);
-        saveExpenses([]);
-
-        alert("Month archived successfully! You can view it in the Monthly Report tab.");
     };
 
     const handleDeleteExpense = (id) => {
-        if (window.confirm("Are you sure you want to delete this expense?")) {
-            const updatedExpenses = expenses.filter(exp => exp.id !== id);
-            setExpenses(updatedExpenses);
-            saveExpenses(updatedExpenses);
-        }
+        setModalConfig({
+            isOpen: true,
+            type: 'confirm',
+            title: 'Delete Expense',
+            message: "Are you sure you want to delete this expense?",
+            onConfirm: () => {
+                const updatedExpenses = expenses.filter(exp => exp.id !== id);
+                setExpenses(updatedExpenses);
+                saveExpenses(updatedExpenses);
+                closeConfig();
+            },
+            onCancel: closeConfig
+        });
     };
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <Modal {...modalConfig} />
             {/* Overview Cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
                 <div className="glass-card animate-scale-in delay-100 hover-scale">
