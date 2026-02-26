@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ExpenseForm from './ExpenseForm';
 import MonthlyReport from './MonthlyReport';
 import { format, parseISO } from 'date-fns';
-import { Plus, PieChart, List, Archive } from 'lucide-react';
+import { Plus, PieChart, List, Archive, Trash2 } from 'lucide-react';
 import { getArchives, saveArchives, saveExpenses } from '../utils/storage';
 
 const Dashboard = ({ budget, expenses, setExpenses }) => {
@@ -36,6 +36,14 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
         saveExpenses([]);
 
         alert("Month archived successfully! You can view it in the Monthly Report tab.");
+    };
+
+    const handleDeleteExpense = (id) => {
+        if (window.confirm("Are you sure you want to delete this expense?")) {
+            const updatedExpenses = expenses.filter(exp => exp.id !== id);
+            setExpenses(updatedExpenses);
+            saveExpenses(updatedExpenses);
+        }
     };
 
     return (
@@ -108,8 +116,18 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
                                                 {exp.category} • {format(parseISO(exp.date), 'MMM dd, yyyy')}
                                             </div>
                                         </div>
-                                        <div className="text-danger font-bold">
-                                            -₹{parseFloat(exp.amount).toFixed(2)}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                            <div className="text-danger font-bold">
+                                                -₹{parseFloat(exp.amount).toFixed(2)}
+                                            </div>
+                                            <button
+                                                onClick={() => handleDeleteExpense(exp.id)}
+                                                className="btn btn-secondary"
+                                                style={{ padding: '0.4rem', borderRadius: '50%', color: 'var(--text-muted)', background: 'transparent', border: 'none' }}
+                                                title="Delete Expense"
+                                            >
+                                                <Trash2 size={16} />
+                                            </button>
                                         </div>
                                     </div>
                                 ))}
