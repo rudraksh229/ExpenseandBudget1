@@ -1,12 +1,12 @@
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { format, parseISO } from 'date-fns';
 import { useState } from 'react';
-import { getArchives } from '../utils/storage';
+import { getArchives, deleteArchive } from '../utils/storage';
 
 const COLORS = ['#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#3b82f6', '#ef4444', '#64748b'];
 
 const MonthlyReport = ({ budget, expenses }) => {
-    const archives = getArchives();
+    const [archives, setArchives] = useState(getArchives());
     const [selectedMonthId, setSelectedMonthId] = useState('current');
 
     let currentBudget = budget;
@@ -79,26 +79,47 @@ const MonthlyReport = ({ budget, expenses }) => {
         return null;
     };
 
+    const handleDeleteArchive = () => {
+        if (selectedMonthId !== 'current') {
+            if (window.confirm('Are you sure you want to delete this monthly archive?')) {
+                const updatedArchives = deleteArchive(selectedMonthId);
+                setArchives(updatedArchives);
+                setSelectedMonthId('current');
+            }
+        }
+    };
+
     return (
         <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Month Selector */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ fontSize: '1.5rem', margin: 0 }}>Reports</h2>
-                {archives.length > 0 && (
-                    <select
-                        value={selectedMonthId}
-                        onChange={(e) => setSelectedMonthId(e.target.value)}
-                        className="form-control"
-                        style={{ width: 'auto', minWidth: '200px', cursor: 'pointer' }}
-                    >
-                        <option value="current">Current Month</option>
-                        {[...archives].reverse().map(archive => (
-                            <option key={archive.id} value={archive.id}>
-                                {archive.label}
-                            </option>
-                        ))}
-                    </select>
-                )}
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    {archives.length > 0 && (
+                        <select
+                            value={selectedMonthId}
+                            onChange={(e) => setSelectedMonthId(e.target.value)}
+                            className="custom-select"
+                            style={{ width: 'auto', minWidth: '200px', cursor: 'pointer' }}
+                        >
+                            <option value="current">Current Month</option>
+                            {[...archives].reverse().map(archive => (
+                                <option key={archive.id} value={archive.id}>
+                                    {archive.label}
+                                </option>
+                            ))}
+                        </select>
+                    )}
+                    {selectedMonthId !== 'current' && (
+                        <button
+                            className="btn btn-danger"
+                            style={{ padding: '0.5rem 1rem' }}
+                            onClick={handleDeleteArchive}
+                        >
+                            Delete Report
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>

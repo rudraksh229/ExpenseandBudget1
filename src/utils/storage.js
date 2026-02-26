@@ -50,3 +50,10 @@ export const getArchives = () => {
   const data = localStorage.getItem(STORAGE_KEYS.ARCHIVES);
   return data ? JSON.parse(data) : [];
 };
+
+export const deleteArchive = (id) => {
+  const archives = getArchives();
+  const updatedArchives = archives.filter(archive => archive.id !== id);
+  saveArchives(updatedArchives);
+  return updatedArchives;
+};
