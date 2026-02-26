@@ -41,7 +41,7 @@ const BudgetSetup = ({ onComplete, initialAmount = '', editMode = false, onCance
                 </div>
                 {error && <p className="text-danger" style={{ fontSize: '0.875rem', marginBottom: '1rem' }}>{error}</p>}
                 <div style={{ display: 'flex', gap: '1rem' }}>
-                    <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
+                    <button type="submit" className="btn btn-primary hover-scale" style={{ flex: 1 }}>
                         {editMode ? 'Update Budget' : 'Set Budget'}
                     </button>
                     {editMode && onCancel && (

@@ -56,9 +56,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className="app-container animate-fade-in">
       <header className="flex-between">
-        <h1>Tracker</h1>
+        <h1>Expense Tracker</h1>
         {budget && !isEditingBudget && (
           <div className="text-muted flex-between" style={{ gap: '1rem' }}>
             <span><span className="text-success font-bold">₹{budget.amount}</span> / month</span>

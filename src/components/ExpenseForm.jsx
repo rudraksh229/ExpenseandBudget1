@@ -100,7 +100,7 @@ const ExpenseForm = ({ setExpenses }) => {
 
                 {error && <p className="text-danger" style={{ fontSize: '0.875rem', marginBottom: '1rem' }}>{error}</p>}
 
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>
+                <button type="submit" className="btn btn-primary hover-scale" style={{ width: '100%', marginTop: '0.5rem' }}>
                     <Plus size={18} /> Add Expense
                 </button>
             </form>

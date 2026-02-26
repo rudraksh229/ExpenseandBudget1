@@ -104,7 +104,7 @@ const MonthlyReport = ({ budget, expenses }) => {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
 
                 {/* Expenses by Category Pie Chart */}
-                <div className="glass-card" style={{ height: '400px' }}>
+                <div className="glass-card animate-scale-in delay-100 hover-scale" style={{ height: '400px' }}>
                     <h3 style={{ marginBottom: '1rem' }}>Spending by Category ({currentLabel})</h3>
                     {currentExpenses.length === 0 ? (
                         <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }} className="text-muted">
@@ -134,7 +134,7 @@ const MonthlyReport = ({ budget, expenses }) => {
                 </div>
 
                 {/* Daily Spending Bar Chart */}
-                <div className="glass-card" style={{ height: '400px' }}>
+                <div className="glass-card animate-scale-in delay-200 hover-scale" style={{ height: '400px' }}>
                     <h3 style={{ marginBottom: '1rem' }}>Daily Spending ({currentLabel})</h3>
                     {currentExpenses.length === 0 ? (
                         <div style={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }} className="text-muted">
@@ -157,7 +157,7 @@ const MonthlyReport = ({ budget, expenses }) => {
 
             {/* Month over Month Comparison */}
             {archives.length > 0 && (
-                <div className="glass-card" style={{ height: '400px' }}>
+                <div className="glass-card animate-scale-in delay-300 hover-scale" style={{ height: '400px' }}>
                     <h3 style={{ marginBottom: '1rem' }}>Month-over-Month Comparison</h3>
                     <ResponsiveContainer width="100%" height="85%">
                         <BarChart data={comparisonData}>

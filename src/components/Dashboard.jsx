@@ -42,19 +42,19 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Overview Cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
-                <div className="glass-card">
+                <div className="glass-card animate-scale-in delay-100 hover-scale">
                     <h3 className="text-muted" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Total Budget</h3>
                     <div style={{ fontSize: '2rem', fontWeight: '700' }}>₹{budget.amount.toFixed(2)}</div>
                 </div>
 
-                <div className="glass-card">
+                <div className="glass-card animate-scale-in delay-200 hover-scale">
                     <h3 className="text-muted" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Total Spent</h3>
                     <div style={{ fontSize: '2rem', fontWeight: '700' }} className="text-danger">
                         ₹{totalSpent.toFixed(2)}
                     </div>
                 </div>
 
-                <div className="glass-card">
+                <div className="glass-card animate-scale-in delay-300 hover-scale">
                     <h3 className="text-muted" style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>Remaining</h3>
                     <div style={{ fontSize: '2rem', fontWeight: '700' }} className={isOverBudget ? 'text-danger' : 'text-success'}>
                         ₹{remaining.toFixed(2)}
@@ -91,17 +91,17 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
             {/* Main Content Area */}
             {activeTab === 'expenses' ? (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                    <div>
+                    <div className="animate-fade-in delay-400">
                         <ExpenseForm setExpenses={setExpenses} />
                     </div>
-                    <div className="glass-card">
+                    <div className="glass-card animate-fade-in delay-500">
                         <h3 style={{ marginBottom: '1.5rem' }}>Recent Expenses</h3>
                         {expenses.length === 0 ? (
                             <p className="text-muted text-center" style={{ padding: '2rem' }}>No expenses logged yet.</p>
                         ) : (
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                                 {[...expenses].reverse().map(exp => (
-                                    <div key={exp.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}>
+                                    <div key={exp.id} className="animate-slide-right hover-scale" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--radius-sm)' }}>
                                         <div>
                                             <div style={{ fontWeight: '500' }}>{exp.description}</div>
                                             <div className="text-muted" style={{ fontSize: '0.875rem', marginTop: '0.25rem' }}>
