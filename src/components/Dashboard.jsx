@@ -2,13 +2,15 @@ import { useState } from 'react';
 import ExpenseForm from './ExpenseForm';
 import MonthlyReport from './MonthlyReport';
 import { format, parseISO } from 'date-fns';
-import { Plus, PieChart, List, Archive, Trash2 } from 'lucide-react';
+import { Plus, PieChart, List, Archive, Trash2, Folder } from 'lucide-react';
 import { getArchives, saveArchives, saveExpenses } from '../utils/storage';
 import Modal from './Modal';
+import ManageArchivesModal from './ManageArchivesModal';
 
 const Dashboard = ({ budget, expenses, setExpenses }) => {
     const [activeTab, setActiveTab] = useState('expenses'); // 'expenses' or 'report'
     const [modalConfig, setModalConfig] = useState({ isOpen: false });
+    const [isManageArchivesOpen, setIsManageArchivesOpen] = useState(false);
 
     const totalSpent = expenses.reduce((sum, exp) => sum + parseFloat(exp.amount), 0);
     const remaining = budget.amount - totalSpent;
@@ -85,6 +87,7 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <Modal {...modalConfig} />
+            <ManageArchivesModal isOpen={isManageArchivesOpen} onClose={() => setIsManageArchivesOpen(false)} />
             {/* Overview Cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem' }}>
                 <div className="glass-card animate-scale-in delay-100 hover-scale">
@@ -123,14 +126,24 @@ const Dashboard = ({ budget, expenses, setExpenses }) => {
                         <PieChart size={18} /> Monthly Report
                     </button>
                 </div>
-                <button
-                    className="btn btn-secondary"
-                    onClick={handleArchiveMonth}
-                    title="Save current month's data and start fresh"
-                    style={{ borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)', background: 'transparent' }}
-                >
-                    <Archive size={18} /> Archive Month
-                </button>
+                <div style={{ display: 'flex', gap: '1rem' }}>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={() => setIsManageArchivesOpen(true)}
+                        title="Manage and delete past archives"
+                        style={{ borderColor: 'var(--glass-border)', color: 'var(--text-secondary)', background: 'transparent' }}
+                    >
+                        <Folder size={18} /> Manage Archives
+                    </button>
+                    <button
+                        className="btn btn-secondary"
+                        onClick={handleArchiveMonth}
+                        title="Save current month's data and start fresh"
+                        style={{ borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)', background: 'transparent' }}
+                    >
+                        <Archive size={18} /> Archive Month
+                    </button>
+                </div>
             </div>
 
             {/* Main Content Area */}
