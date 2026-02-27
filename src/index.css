@@ -1,28 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette */
-  --bg-primary: #0f172a;
-  /* Deep Slate */
-  --bg-secondary: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
+  /* Color Palette - Finance Oriented */
+  --bg-primary: #06130d;
+  /* Deep Forest/Slate */
+  --bg-secondary: #0d1f18;
+  --text-primary: #f0fdf4;
+  /* Very light green hint */
+  --text-secondary: #86efac;
+  /* Minty secondary */
 
-  --accent-primary: #8b5cf6;
-  /* Vibrant Purple */
-  --accent-secondary: #ec4899;
-  /* Pink */
+  --accent-primary: #10b981;
+  /* Emerald Green */
+  --accent-secondary: #f59e0b;
+  /* Golden Amber */
   --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
 
-  --success: #10b981;
+  --success: #22c55e;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --info: #3b82f6;
+  --info: #0ea5e9;
 
   /* Glossy / Glassmorphism */
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-bg: rgba(13, 31, 24, 0.7);
+  --glass-border: rgba(16, 185, 129, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 
   /* Utilities */
   --radius-lg: 16px;
@@ -44,8 +46,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image:
-    radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+    radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
   background-attachment: fixed;
 }
 
@@ -138,7 +140,7 @@ h3 {
 /* Custom Select Dropdown Styles */
 .custom-select {
   appearance: none;
-  background-color: rgba(15, 23, 42, 0.8);
+  background-color: rgba(6, 19, 13, 0.8);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
   padding: 0.75rem 2.5rem 0.75rem 1rem;
@@ -147,8 +149,8 @@ h3 {
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
-  background-image: linear-gradient(45deg, transparent 50%, var(--accent-secondary) 50%),
-    linear-gradient(135deg, var(--accent-secondary) 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent-primary) 50%),
+    linear-gradient(135deg, var(--accent-primary) 50%, transparent 50%);
   background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px);
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
@@ -156,15 +158,15 @@ h3 {
 }
 
 .custom-select:hover {
-  border-color: rgba(236, 72, 153, 0.5);
-  /* Pink hover accent */
-  box-shadow: 0 0 10px rgba(236, 72, 153, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  /* Emerald hover accent */
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
 }
 
 .custom-select:focus {
   outline: none;
   border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
 .custom-select option {
@@ -191,12 +193,13 @@ h3 {
 
 .btn-primary {
   background: var(--accent-gradient);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.39);
+  color: #06130d;
+  /* Dark text on gold/green gradient for better contrast */
+  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.3);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.23);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
   transform: translateY(-1px);
 }
 
@@ -274,15 +277,15 @@ h3 {
 
 @keyframes pulseGlow {
   0% {
-    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
   }
 
   70% {
-    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
   }
 }
 
