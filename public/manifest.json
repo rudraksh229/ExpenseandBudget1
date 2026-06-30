@@ -1,0 +1,15 @@
+{
+  "name": "Expense and Budget Tracker",
+  "short_name": "Expense",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ]
+}
